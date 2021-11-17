@@ -23,6 +23,9 @@ public class TypeValidator {
         return true;
     }
 
+    /**
+     * ISBN 13 문자열인지 확인
+     */
     public static boolean isISBN13(String strIsbn) {
         if (strIsbn == null || "".equals(strIsbn)) {
             return false;
@@ -48,6 +51,17 @@ public class TypeValidator {
         } else {
             return false;
         }
+    }
+
+    public static boolean isValidLengthStr(int len, String paramStr) {
+
+        if (paramStr == null || "".equals(paramStr) ) {
+            if (len == 0) return true;
+            return false;
+        }
+
+        if ( paramStr.length() == len ) return true;
+        return false;
     }
 
 }
