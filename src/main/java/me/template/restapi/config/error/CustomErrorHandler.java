@@ -1,9 +1,8 @@
 package me.template.restapi.config.error;
 
-import me.template.restapi.config.error.exceptions.EmptyAPIKeyException;
+import me.template.restapi.config.error.exceptions.InvalidAPIKeyException;
 import me.template.restapi.config.error.exceptions.InvalidParameterException;
 import me.template.restapi.config.error.exceptions.NullParameterException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,11 +22,11 @@ public class CustomErrorHandler extends ResponseEntityExceptionHandler {
         super();
     }
 
-    @ExceptionHandler({ EmptyAPIKeyException.class })
+    @ExceptionHandler({ InvalidAPIKeyException.class })
     public ResponseEntity<Object> handleEmptyAPIKeyException(
-            final EmptyAPIKeyException ex, final WebRequest request){
+            final InvalidAPIKeyException ex, final WebRequest request){
         return buildResponseEntity(new CustomErrorResponse(
-                HttpStatus.FORBIDDEN, new CustomError(CustomErrorEnum.EMPTY_API_KEY)));
+                HttpStatus.FORBIDDEN, new CustomError(CustomErrorEnum.INVALID_API_KEY)));
     }
 
     @ExceptionHandler({ InvalidParameterException.class })

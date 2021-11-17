@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since : 2021. 11. 03 오전 10:15
  */
 @ResponseStatus(value = HttpStatus.FORBIDDEN)
-public class EmptyAPIKeyException extends RuntimeException{
-    public EmptyAPIKeyException() {
+public class InvalidAPIKeyException extends RuntimeException{
+    public InvalidAPIKeyException() {
         super();
     }
 
-    public EmptyAPIKeyException(String message) {
+    public InvalidAPIKeyException(String message) {
         super(message);
     }
 
-    public EmptyAPIKeyException(String message, Throwable cause) {
+    public InvalidAPIKeyException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public EmptyAPIKeyException(Throwable cause) {
+    public InvalidAPIKeyException(Throwable cause) {
         super(cause);
     }
 }
