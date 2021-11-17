@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
-public class ServiceControllerTests {
+public class ApiMainControllerTests {
 
     @Autowired
     private MockMvc mockMvc;

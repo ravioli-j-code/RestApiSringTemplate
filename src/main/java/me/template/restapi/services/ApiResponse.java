@@ -8,11 +8,11 @@ import lombok.Getter;
  * @since : 2021. 11. 02 오후 6:56
  */
 @Getter
-public class ServiceResponse {
+public class ApiResponse {
 
     private String isbn;
 
-    public ServiceResponse(String isbn){
+    public ApiResponse(String isbn){
         this.isbn = isbn;
     }
 
