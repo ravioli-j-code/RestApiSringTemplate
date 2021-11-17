@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @version : 1.0
  * @since : 2021. 11. 03 오전 10:15
  */
-@ResponseStatus(value = HttpStatus.FORBIDDEN)
-public class EmptyAPIKeyException extends RuntimeException{
-    public EmptyAPIKeyException() {
+@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+public class InvalidParameterException extends RuntimeException{
+    public InvalidParameterException() {
         super();
     }
 
-    public EmptyAPIKeyException(String message) {
+    public InvalidParameterException(String message) {
         super(message);
     }
 
-    public EmptyAPIKeyException(String message, Throwable cause) {
+    public InvalidParameterException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public EmptyAPIKeyException(Throwable cause) {
+    public InvalidParameterException(Throwable cause) {
         super(cause);
     }
 }

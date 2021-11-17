@@ -1,6 +1,9 @@
 package me.template.restapi.services;
 
+import me.template.restapi.common.TypeValidator;
 import me.template.restapi.config.error.exceptions.EmptyAPIKeyException;
+import me.template.restapi.config.error.exceptions.InvalidParameterException;
+import me.template.restapi.config.error.exceptions.NullParameterException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ServiceController {
 
-    @GetMapping("/isbn/{isbn}")
-    public ServiceResponse getIsbnInfo(@PathVariable String isbn){
-        try {
-            throw new EmptyAPIKeyException("Empty list");
-        } catch (EmptyAPIKeyException ex) {
-            System.out.println(ex);
+
+    @GetMapping(value = {"/isbn", "/isbn/{isbn}" }, produces = { "application/json" })
+    public ServiceResponse getIsbnInfo(@PathVariable(required = false) final String isbn) throws Exception{
+        if (isbn == null || "".equals(isbn)) {
+            throw new NullParameterException();
+        } else if (!TypeValidator.isISBN13(isbn)) {
+            throw new InvalidParameterException();
         }
         return new ServiceResponse(isbn);
     }

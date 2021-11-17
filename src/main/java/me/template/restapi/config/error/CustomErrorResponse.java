@@ -15,17 +15,15 @@ import java.time.LocalDateTime;
 public class CustomErrorResponse {
 
     private HttpStatus status;
-    private CustomErrorEnum errorEnum;
-    private String error;
+    private CustomError error;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime responsetime;
 
-    public CustomErrorResponse(HttpStatus status, CustomErrorEnum errorEnum, String error){
+    CustomErrorResponse(HttpStatus status, CustomError cstError){
         super();
         this.status = status;
-        this.errorEnum = errorEnum;
-        this.error = error;
+        this.error = cstError;
         this.responsetime = LocalDateTime.now();
     }
 

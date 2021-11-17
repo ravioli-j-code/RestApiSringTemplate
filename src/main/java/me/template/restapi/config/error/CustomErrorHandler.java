@@ -1,6 +1,8 @@
 package me.template.restapi.config.error;
 
 import me.template.restapi.config.error.exceptions.EmptyAPIKeyException;
+import me.template.restapi.config.error.exceptions.InvalidParameterException;
+import me.template.restapi.config.error.exceptions.NullParameterException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +19,40 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomErrorHandler extends ResponseEntityExceptionHandler {
 
+    public CustomErrorHandler() {
+        super();
+    }
+
     @ExceptionHandler({ EmptyAPIKeyException.class })
-    public ResponseEntity<Object> handleEmptyAPIKeyException(Exception ex, HttpStatus status, WebRequest request){
-        CustomErrorResponse customErr = new CustomErrorResponse(
-                status, CustomErrorEnum.EMPTY_API_KEY, "Error Occurred.");
-        return new ResponseEntity <>(customErr, new HttpHeaders(), customErr.getStatus());
+    public ResponseEntity<Object> handleEmptyAPIKeyException(
+            final EmptyAPIKeyException ex, final WebRequest request){
+        return buildResponseEntity(new CustomErrorResponse(
+                HttpStatus.FORBIDDEN, new CustomError(CustomErrorEnum.EMPTY_API_KEY)));
+    }
+
+    @ExceptionHandler({ InvalidParameterException.class })
+    public ResponseEntity<Object> handleInvalidParameterException(
+            final InvalidParameterException ex, final WebRequest request){
+        return buildResponseEntity(new CustomErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR, new CustomError(CustomErrorEnum.INVALID_PARAMETER)));
+    }
+
+    @ExceptionHandler({ NullParameterException.class })
+    public ResponseEntity<Object> handleNullParameterException(
+            final NullParameterException ex, final WebRequest request){
+        return buildResponseEntity(new CustomErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR, new CustomError(CustomErrorEnum.NULL_PARAMETER)));
     }
 
     @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleAll(Exception ex, WebRequest request){
-        CustomErrorResponse customErr = new CustomErrorResponse(
-                HttpStatus.INTERNAL_SERVER_ERROR, CustomErrorEnum.INTERNAL_SERVER_ERROR, "Error Occurred.");
-        return new ResponseEntity <>(customErr, new HttpHeaders(), customErr.getStatus());
+    public ResponseEntity<Object> handleAll(
+            final Exception ex, final WebRequest request){
+        return buildResponseEntity(new CustomErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR, new CustomError(CustomErrorEnum.INTERNAL_SERVER_ERROR)));
+    }
+
+    private ResponseEntity<Object> buildResponseEntity(CustomErrorResponse errorResponse) {
+        return new ResponseEntity <>(errorResponse, errorResponse.getStatus());
     }
 
 }
